@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="TestBook">
+
+	<select id="selectCountTestBookByBookType" resultType="int" parameterType="string">
+		 SELECT COUNT(*) FROM test_book_origin  WHERE bookType = #{bookType} AND processYN = 'N'
+	</select>
+	
+	<select id="selectTestBookByBookType" resultType="TestBook" parameterType="map">
+		SELECT bookID, bookName, bookAuthor, bookType, originPrice FROM test_book_origin
+		WHERE bookType = #{bookType} AND processYN = 'N'
+		ORDER BY bookID LIMIT #{start}, #{limit}		
+	</select>
+	
+	<insert id="insertTestBookBatch" parameterType="TestBook">
+		INSERT INTO ${bookTable} (bookID, bookName, bookAuthor, originPrice, sellPrice, registDate)
+		VALUES(#{bookID}, #{bookName}, #{bookAuthor}, #{originPrice}, #{sellPrice}, NOW())
+	</insert>
+	
+</mapper>    

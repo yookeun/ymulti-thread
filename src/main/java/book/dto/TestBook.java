@@ -3,19 +3,19 @@ package book.dto;
 import java.io.Serializable;
 
 /**
- * 테이블 : books, sell_books_novel, sell_books_business, sell_books_art 테이블 엔티티 
+ * 테이블 : test_book, sell_test_book_novel, sell_test_book_business, sell_test_book_art 테이블 엔티티 
  * @author ykkim
  *
  */
 @SuppressWarnings("serial")
-public class Book implements Serializable {
+public class TestBook implements Serializable {
 	
 	private int bookID;				//고유키
 	private String bookName;	//책명	
 	private String bookAuthor;	//작가
 	private String bookType;	//1: 소설, 2: 비즈니스, 3: 예술
-	private String originPrice;	//원래가격
-	private String sellPrice;		//팔가격 
+	private double originPrice;	//원래가격
+	private double sellPrice;		//팔가격 
 	private String processYN;	//처리여부 : 해당되는 테이블로 처리되면 Y 
 	private String registDate;	//등록일 
 	
@@ -43,16 +43,16 @@ public class Book implements Serializable {
 	public void setBookType(String bookType) {
 		this.bookType = bookType;
 	}
-	public String getOriginPrice() {
+	public double getOriginPrice() {
 		return originPrice;
 	}
-	public void setOriginPrice(String originPrice) {
+	public void setOriginPrice(double originPrice) {
 		this.originPrice = originPrice;
 	}
-	public String getSellPrice() {
+	public double getSellPrice() {
 		return sellPrice;
 	}
-	public void setSellPrice(String sellPrice) {
+	public void setSellPrice(double sellPrice) {
 		this.sellPrice = sellPrice;
 	}
 	public String getProcessYN() {
