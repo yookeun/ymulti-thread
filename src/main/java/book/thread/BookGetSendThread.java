@@ -8,26 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import book.controller.BookController;
 import book.dto.TestBook;
 
-public class BookGetSendThread implements Runnable {
-	
-	private BookController bookController;
-	private final Map<String, Object> queueMap;
-	private String bookType;
+public class BookGetSendThread implements Runnable {	
+
 	private BlockingQueue<TestBook> bookSendQueue;
 	private BlockingQueue<TestBook> bookResultQueue;
 	
 	public BookGetSendThread(BookController bookController,Map<String, Object> queueMap, String bookType) {
-		this.bookController = bookController;
-		this.queueMap = queueMap;
-		this.bookType = bookType;
+		bookSendQueue = bookController.getSendQueue(queueMap, bookType);		
+		bookResultQueue = bookController.getResultQueue(queueMap, bookType);
 	}	
 
 
 
 	@Override
 	public void run() {
-		bookSendQueue = bookController.getSendQueue(queueMap, bookType);		
-		bookResultQueue = bookController.getResultQueue(queueMap, bookType);
+
 		TestBook testBook = null;
 		while (true) {
 			try {

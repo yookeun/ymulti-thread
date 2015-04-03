@@ -39,19 +39,28 @@ public class BookMain {
 	 * 큐생성
 	 */
 	private void init() {		
+	
+		BlockingQueue<TestBook> novelBookSendQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		BlockingQueue<TestBook> businessBookSendQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		BlockingQueue<TestBook> artBookSendQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		
+		BlockingQueue<TestBook> novelBookResultQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		BlockingQueue<TestBook> businessBookResultQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		BlockingQueue<TestBook> artBookResultQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		
 		//소설을 담을 발송큐
-		queueMap.put("SEND_BOOK_TYPE_NOVEL", new ArrayBlockingQueue<TestBook>(QUEUE_SIZE));
+		queueMap.put("SEND_BOOK_TYPE_NOVEL", novelBookSendQueue);
 		//비즈니스를 담을 발송큐
-		queueMap.put("SEND_BOOK_TYPE_BUSINESS", new ArrayBlockingQueue<TestBook>(QUEUE_SIZE));		
+		queueMap.put("SEND_BOOK_TYPE_BUSINESS", businessBookSendQueue);		
 		//예술을 담을 발송큐
-		queueMap.put("SEND_BOOK_TYPE_ATR", new ArrayBlockingQueue<TestBook>(QUEUE_SIZE));
+		queueMap.put("SEND_BOOK_TYPE_ATR", artBookSendQueue);
 
 		//소설을 담을 결과큐
-		queueMap.put("RESULT_BOOK_TYPE_NOVEL", new ArrayBlockingQueue<TestBook>(QUEUE_SIZE));
+		queueMap.put("RESULT_BOOK_TYPE_NOVEL", novelBookResultQueue);
 		//비즈니스를 담을 결과큐
-		queueMap.put("RESULT_BOOK_TYPE_BUSINESS", new ArrayBlockingQueue<TestBook>(QUEUE_SIZE));		
+		queueMap.put("RESULT_BOOK_TYPE_BUSINESS", businessBookResultQueue);		
 		//예술을 담을 결과큐
-		queueMap.put("RESULT_BOOK_TYPE_ATR", new ArrayBlockingQueue<TestBook>(QUEUE_SIZE));		
+		queueMap.put("RESULT_BOOK_TYPE_ATR", artBookResultQueue);		
 	}
 	
 	/**
@@ -64,6 +73,7 @@ public class BookMain {
 		executeMultiExecutor(new BookPutQueueThread(bookController, queueMap, Constant.BOOK_TYPE_BUSINESS), 1);
 		executeMultiExecutor(new BookPutQueueThread(bookController, queueMap, Constant.BOOK_TYPE_ART), 1);
 		
+	
 		//각분야의 큐에서 가져오기 각분야 결과큐에 넣는 스레드를 각각 10개씩 생성한다.
 		executeMultiExecutor(new BookGetSendThread(bookController, queueMap, Constant.BOOK_TYPE_NOVEL), 10);
 		executeMultiExecutor(new BookGetSendThread(bookController, queueMap, Constant.BOOK_TYPE_BUSINESS), 10);
@@ -74,6 +84,7 @@ public class BookMain {
 		executeMultiExecutor(new BookResultInsertThread(bookController, queueMap, Constant.BOOK_TYPE_NOVEL), 3);
 		executeMultiExecutor(new BookResultInsertThread(bookController, queueMap, Constant.BOOK_TYPE_BUSINESS), 3);
 		executeMultiExecutor(new BookResultInsertThread(bookController, queueMap, Constant.BOOK_TYPE_ART), 3);
+	
 	}
 	
 	/**

@@ -64,6 +64,8 @@ public class BookControllerTest {
 				start += testBookList.size();
 				for(TestBook testBook : testBookList ) {			
 					bookQueue.put(testBook);		
+					
+					//테스트이므로 큐에서 바로 삭제해준다.
 					deleteQueue(bookQueue);
 				}// end for	
 				System.out.println("total==="+start);

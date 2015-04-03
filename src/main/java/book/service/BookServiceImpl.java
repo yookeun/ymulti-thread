@@ -23,11 +23,15 @@ public class BookServiceImpl  implements BookService {
 	@Override
 	public List<TestBook> selectTestBookByBookType(Map<String, Object> map) {	
 		return bookDAO.selectTestBookByBookType(map);
-	}
-	
+	}	
 	
 	@Override
 	public void insertTestBookBatch(List<TestBook> testBookList) {
 		bookDAO.insertTestBookBatch(testBookList);
+	}
+	
+	@Override
+	public void updateProcessTestBookBatch(List<TestBook>testBookList) {
+		bookDAO.updateProcessTestBookBatch(testBookList);
 	}
 }

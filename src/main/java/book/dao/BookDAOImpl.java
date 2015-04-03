@@ -32,4 +32,11 @@ public class BookDAOImpl implements BookDAO {
 		}
 	}
 	
+	@Override
+	public void updateProcessTestBookBatch(List<TestBook>testBookList) {
+		for (TestBook  testBook : testBookList) {
+			sqlSession.update("TestBook.updateProcessTestBookBatch", testBook);
+		}
+	}
+	
 }

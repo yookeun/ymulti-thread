@@ -49,6 +49,7 @@ public class BookController {
 			List<TestBook> testBookList = null;
 			final int  LIMIT_COUNT = 1000;
 			int start = 0;		
+			int total = 0;
 			while (true) {			
 				map.put("start", start);
 				map.put("limit", LIMIT_COUNT);
@@ -56,12 +57,18 @@ public class BookController {
 				if (testBookList.size() == 0 || testBookList == null) {
 					break;
 				}
-				start += testBookList.size();
+				total += testBookList.size();
+				bookSerive.updateProcessTestBookBatch(testBookList);
 				for(TestBook testBook : testBookList ) {			
-					bookQueue.put(testBook);				
+					if (testBook != null) {
+						bookQueue.put(testBook);	
+					}
+									
 				} // end for	
-				System.out.println("total==="+start);
+				
+				System.out.println("["+getBookTableName(bookType)+"] count = " + total);
 			}// end while 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,9 +85,9 @@ public class BookController {
 			bookQueue = (BlockingQueue<TestBook>) queueMap.get("SEND_BOOK_TYPE_NOVEL");
 		}  else if (bookType.equals(Constant.BOOK_TYPE_BUSINESS)) {
 			bookQueue = (BlockingQueue<TestBook>) queueMap.get("SEND_BOOK_TYPE_BUSINESS");
-		}  else if (bookType.equals(Constant.BOOK_TYPE_BUSINESS)) {
+		}  else if (bookType.equals(Constant.BOOK_TYPE_ART)) {
 			bookQueue = (BlockingQueue<TestBook>) queueMap.get("SEND_BOOK_TYPE_ATR");
-		}
+		} 
 		return bookQueue;
 	}
 	
@@ -95,9 +102,9 @@ public class BookController {
 			bookQueue = (BlockingQueue<TestBook>) queueMap.get("RESULT_BOOK_TYPE_NOVEL");
 		}  else if (bookType.equals(Constant.BOOK_TYPE_BUSINESS)) {
 			bookQueue = (BlockingQueue<TestBook>) queueMap.get("RESULT_BOOK_TYPE_BUSINESS");
-		}  else if (bookType.equals(Constant.BOOK_TYPE_BUSINESS)) {
+		}  else if (bookType.equals(Constant.BOOK_TYPE_ART)) {
 			bookQueue = (BlockingQueue<TestBook>) queueMap.get("RESULT_BOOK_TYPE_ATR");
-		}
+		} 
 		return bookQueue;
 	}	
 	
@@ -107,6 +114,24 @@ public class BookController {
 	 */
 	public void insertTestBookBatch(List<TestBook> testBookList) {
 		bookSerive.insertTestBookBatch(testBookList);
+	}
+	
+	
+	/**
+	 * bookType에 따른 테이블명 
+	 * @param bookType
+	 * @return
+	 */
+	public String getBookTableName(String bookType) {
+		String bookTable = "";
+		if (bookType.equals(Constant.BOOK_TYPE_ART)) {
+			bookTable = "test_book_art";
+		} else if (bookType.equals(Constant.BOOK_TYPE_BUSINESS)) {
+			bookTable = "test_book_business";
+		} else if (bookType.equals(Constant.BOOK_TYPE_NOVEL)) {
+			bookTable = "test_book_novel";
+		}		
+		return bookTable;
 	}
 	
 }

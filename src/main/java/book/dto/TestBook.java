@@ -18,6 +18,7 @@ public class TestBook implements Serializable {
 	private double sellPrice;		//팔가격 
 	private String processYN;	//처리여부 : 해당되는 테이블로 처리되면 Y 
 	private String registDate;	//등록일 
+	private String bookTable;	//결과에 넣을 테이블명 
 	
 	public int getBookID() {
 		return bookID;
@@ -66,5 +67,12 @@ public class TestBook implements Serializable {
 	}
 	public void setRegistDate(String registDate) {
 		this.registDate = registDate;
+	}
+	public String getBookTable() {
+		return bookTable;
+	}
+	public void setBookTable(String bookTable) {
+		this.bookTable = bookTable;
 	}	
+	
 }

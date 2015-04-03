@@ -14,15 +14,15 @@ import book.dto.TestBook;
  *
  */
 public class BookPutQueueThread implements Runnable {	
-	private BookController bookController;
-	private final Map<String, Object> queueMap;
+	private BookController bookController;	
 	private String bookType;
 	private BlockingQueue<TestBook> bookQueue;	
 	
 	public BookPutQueueThread(BookController bookController, Map<String, Object> queueMap, String bookType) {
-		this.bookController = bookController;
-		this.queueMap = queueMap;
+		this.bookController = bookController;	
 		this.bookType = bookType;
+		//bookType에 해당되는 큐를 가져온다.		
+		this.bookQueue = bookController.getSendQueue(queueMap, bookType);		
 		
 	}	
 	
@@ -30,10 +30,16 @@ public class BookPutQueueThread implements Runnable {
 
 	@Override
 	public void run() {	
-		//bookType에 해당되는 큐를 가져온다.
-		bookQueue = bookController.getSendQueue(queueMap, bookType);		
+		
+		//bookQueue = bookController.getSendQueue(queueMap, bookType);		
 		while (true) {
-			bookController.selectTestBookAndPutQueue(bookQueue, bookType);
+			// bookType에 맞는 레코드를 조회해서  큐에 넣어준다.
+			if (bookQueue == null) {
+				System.out.println("bookQueue is null!!!!");
+				break;
+			} else {
+				bookController.selectTestBookAndPutQueue(bookQueue, bookType);
+			}
 			try {
 				Thread.sleep(10 * 1000);
 			} catch (InterruptedException e) {

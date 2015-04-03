@@ -14,8 +14,12 @@
 	</select>
 	
 	<insert id="insertTestBookBatch" parameterType="TestBook">
-		INSERT INTO ${bookTable} (bookID, bookName, bookAuthor, originPrice, sellPrice, registDate)
-		VALUES(#{bookID}, #{bookName}, #{bookAuthor}, #{originPrice}, #{sellPrice}, NOW())
+		INSERT INTO ${bookTable} (bookID, bookName, bookAuthor, bookType, originPrice, sellPrice, registDate)
+		VALUES(#{bookID}, #{bookName}, #{bookAuthor}, #{bookType}, #{originPrice}, #{sellPrice}, NOW())
 	</insert>
+	
+	<update id="updateProcessTestBookBatch" parameterType="TestBook">
+		UPDATE test_book_origin SET processYN = 'Y' WHERE  bookID = #{bookID}
+	</update>
 	
 </mapper>    

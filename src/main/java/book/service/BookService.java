@@ -28,4 +28,10 @@ public interface BookService {
 	 * @param testBookList
 	 */
 	public void insertTestBookBatch(List<TestBook> testBookList);
+	
+	/**
+	 * 스레드에서 가져간 책들  표시  
+	 * @param testBookList
+	 */
+	public void updateProcessTestBookBatch(List<TestBook>testBookList);
 }
