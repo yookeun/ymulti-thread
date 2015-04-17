@@ -3,11 +3,15 @@ package book.thread;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import book.controller.BookController;
 import book.dto.TestBook;
 
+
+/**
+ * bookType에 해당되는 큐를 읽어들여 원래 책값의 10%을 판매액으로 변경한후에 결과큐에 넣어준다.
+ * @author ykkim
+ *
+ */
 public class BookGetSendThread implements Runnable {	
 
 	private BlockingQueue<TestBook> bookSendQueue;
@@ -25,7 +29,7 @@ public class BookGetSendThread implements Runnable {
 
 		TestBook testBook = null;
 		while (true) {
-			try {
+			try {			
 				testBook = bookSendQueue.take();
 				//원래 책값의 10%을 판매액으로 변경한다.
 				testBook.setSellPrice(testBook.getOriginPrice() + testBook.getOriginPrice() * 0.1);

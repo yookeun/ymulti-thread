@@ -62,10 +62,8 @@ public class BookController {
 				for(TestBook testBook : testBookList ) {			
 					if (testBook != null) {
 						bookQueue.put(testBook);	
-					}
-									
-				} // end for	
-				
+					}									
+				} // end for
 				System.out.println("["+getBookTableName(bookType)+"] count = " + total);
 			}// end while 
 			

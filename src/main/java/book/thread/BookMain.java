@@ -40,27 +40,28 @@ public class BookMain {
 	 */
 	private void init() {		
 	
+		//소설을 담는 발송큐 
 		BlockingQueue<TestBook> novelBookSendQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		//비즈니스를 담는 발송큐
 		BlockingQueue<TestBook> businessBookSendQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		//예술을 담는 발송큐
 		BlockingQueue<TestBook> artBookSendQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
 		
+		//소설을 담는 결과큐
 		BlockingQueue<TestBook> novelBookResultQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		//비즈니스를 담는 결과큐
 		BlockingQueue<TestBook> businessBookResultQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
+		//예술을 담는 결과큐 
 		BlockingQueue<TestBook> artBookResultQueue = new ArrayBlockingQueue<TestBook>(QUEUE_SIZE);
 		
-		//소설을 담을 발송큐
-		queueMap.put("SEND_BOOK_TYPE_NOVEL", novelBookSendQueue);
-		//비즈니스를 담을 발송큐
+		//해당 큐를 각각의 맵에 담는다.
+		queueMap.put("SEND_BOOK_TYPE_NOVEL", novelBookSendQueue);		
 		queueMap.put("SEND_BOOK_TYPE_BUSINESS", businessBookSendQueue);		
-		//예술을 담을 발송큐
-		queueMap.put("SEND_BOOK_TYPE_ATR", artBookSendQueue);
-
-		//소설을 담을 결과큐
-		queueMap.put("RESULT_BOOK_TYPE_NOVEL", novelBookResultQueue);
-		//비즈니스를 담을 결과큐
+		queueMap.put("SEND_BOOK_TYPE_ATR", artBookSendQueue);		
+		queueMap.put("RESULT_BOOK_TYPE_NOVEL", novelBookResultQueue);		
 		queueMap.put("RESULT_BOOK_TYPE_BUSINESS", businessBookResultQueue);		
-		//예술을 담을 결과큐
 		queueMap.put("RESULT_BOOK_TYPE_ATR", artBookResultQueue);		
+		System.out.println("BlockingQueue has created");
 	}
 	
 	/**
@@ -84,7 +85,7 @@ public class BookMain {
 		executeMultiExecutor(new BookResultInsertThread(bookController, queueMap, Constant.BOOK_TYPE_NOVEL), 3);
 		executeMultiExecutor(new BookResultInsertThread(bookController, queueMap, Constant.BOOK_TYPE_BUSINESS), 3);
 		executeMultiExecutor(new BookResultInsertThread(bookController, queueMap, Constant.BOOK_TYPE_ART), 3);
-	
+		System.out.println("Thread has created");
 	}
 	
 	/**

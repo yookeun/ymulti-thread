@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import book.common.Constant;
 import book.controller.BookController;
 import book.dto.TestBook;
 
+
+/**
+ * 해당분야의 결과큐에 있는 값을 가져와서 해당테이블에 인서트한다. 
+ * @author ykkim
+ *
+ */
 public class BookResultInsertThread implements Runnable {
 	
 	private BookController bookController;
@@ -35,8 +40,7 @@ public class BookResultInsertThread implements Runnable {
 		//각각에 해당되는 큐에 값을 읽어들인다. 그리고 arrayList에 담는다. 그리고 LIMIT_COUNT 만큼 채워지면 각각의 테이블에 배치로 인서트된다.
 		//그런데 만약 LIMIT_COUNT 만큼 차있지 않았다면 (즉 나머지), 그것을 마저 넣어주어야 한다. (즉 큐에는 비어 있는데 LIMIT_COUNT에 해당되지 않은 경우)
 		while (true) {
-			try {
-				
+			try {				
 				//1. 결과큐가 비어 있는지 확인한다.
 				synchronized (bookResultQueue) {
 					if (bookResultQueue.isEmpty()) {

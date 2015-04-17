@@ -1,10 +1,8 @@
 package book.thread;
 
-import java.util.List;
+
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-
-import book.common.Constant;
 import book.controller.BookController;
 import book.dto.TestBook;
 
@@ -22,17 +20,14 @@ public class BookPutQueueThread implements Runnable {
 		this.bookController = bookController;	
 		this.bookType = bookType;
 		//bookType에 해당되는 큐를 가져온다.		
-		this.bookQueue = bookController.getSendQueue(queueMap, bookType);		
-		
-	}	
-	
-	
+		this.bookQueue = bookController.getSendQueue(queueMap, bookType);				
+	}		
 
 	@Override
-	public void run() {	
-		
+	public void run() {
 		//bookQueue = bookController.getSendQueue(queueMap, bookType);		
 		while (true) {
+			
 			// bookType에 맞는 레코드를 조회해서  큐에 넣어준다.
 			if (bookQueue == null) {
 				System.out.println("bookQueue is null!!!!");
@@ -40,6 +35,7 @@ public class BookPutQueueThread implements Runnable {
 			} else {
 				bookController.selectTestBookAndPutQueue(bookQueue, bookType);
 			}
+			System.out.println("-BookPutQueueThread["+Thread.currentThread()+"] waiting....");
 			try {
 				Thread.sleep(10 * 1000);
 			} catch (InterruptedException e) {
