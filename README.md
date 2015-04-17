@@ -66,7 +66,11 @@ registDate|DATETIME|입력날짜
 
 ----------------
 **BookPutQueueThread (Work Thread & Producer)**
+<<<<<<< HEAD
 >test_board_origin의 값이 있을 때까지 대기하는  WorkerThread이자 값이 있다면 발송큐에 넣어주는 Producer.
+=======
+>_test_board_origin의 값이 있을 때까지 대기하는  WorkerThread이자 값이 있다면 발송큐에 넣어주는 Producer.
+>>>>>>> a6dc08c7c99469a2941a37fa77bf6fbeb1da69ea
 
 test_board_origin에서 bookType에 맡게 각각 BlockingQueue에 넣어주는  스레드이다.
 총 3개(소설, 비즈니스, 예술)의 스레드가 생성되어 자신에게 해당되는 레코드가 있다면 읽어들여 발송큐에 넣어준다. 
@@ -74,7 +78,11 @@ DB접속이 이루어진다.
 
 ----------------
 **BookGetSendThread (Work Thread & Producer & Consumer)**
+<<<<<<< HEAD
 >발송큐에 값이 있을때까지 대기하는 Consumer & WorkerThread이자 값이 있다면 처리후에 결과큐에 넣어주는 Producer.
+=======
+>_발송큐에 값이 있을때까지 대기하는 Consumer & WorkerThread이자 값이 있다면 처리후에 결과큐에 넣어주는 Producer.
+>>>>>>> a6dc08c7c99469a2941a37fa77bf6fbeb1da69ea
 
 bookType에 해당되는 발송큐를 읽어들여 원래 책값의 10%을 판매액으로 변경한후에 결과큐에 넣어준다. 
 각 분야별로 10개의 클래스가 생성된다. (총 30개)
@@ -83,7 +91,11 @@ DB접속이 발생되지 않는다
 ---------------
 
 **BookResultInsertThread (Work Thread & Consumer)**
+<<<<<<< HEAD
 >결과큐에 값이 있을때까지 대기하는 WorkerThread이자 값이 있다면 처리후에 결과큐에 넣어주는 Consumer.
+=======
+>_결과큐에 값이 있을때까지 대기하는 WorkerThread이자 값이 있다면 처리후에 결과큐에 넣어주는 Consumer.
+>>>>>>> a6dc08c7c99469a2941a37fa77bf6fbeb1da69ea
 
 해당분야의 결과큐에 있는 값을 가져와서 해당테이블에 인서트한다. 각 분야당 각각 3개의 스레드가 생성된다. (총 9개)
 DB접속이 이루어진다.
