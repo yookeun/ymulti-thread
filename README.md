@@ -27,7 +27,7 @@ ymulti-thread는 등록된 서적을 각각 해당분류로 정리하는 프로�
 **test_book_origin**
 
 컬럼명|타입|용도
------|---|
+-----|---|---
 bookID|INT|고유키
 bookName|VARCHAR(100)|제목
 bookAuthor|VARCHAR(20)|작가
@@ -50,7 +50,7 @@ registDate|DATETIME|입력날짜
 
 3. 주요클래스 설명
 ----------------
-###BookMain
+**BookMain (Main Class)**
 
 맨처음 실행하는 메인 클래스이다. 스프링 설정파일인 ApplicationContext.xml를 읽어들이고, 각각의 책종류에 맞게 큐가 생성된다. 
 큐는 각 책종류에 각각 2개씩 생성된다. 소설을 담는 발송큐와 소설을 처리하는 결과큐등으로 생성된다. 
@@ -61,7 +61,7 @@ registDate|DATETIME|입력날짜
 그래서 이 메인클래스에서는 큐를 각각 만들어주고, 그 큐를 처리하는 스레드를 생성하는 역할을 한다. 
 
 ----------------
-###BookPutQueueThread (Work Thread & Producer)
+**BookPutQueueThread (Work Thread & Producer)**
 >_test_board_origin의 값이 있을 때까지 대기하는  WorkerThread이자 값이 있다면 발송큐에 넣어주는 Producer입니다._
 
 test_board_origin에서 bookType에 맡게 각각 BlockingQueue에 넣어주는  스레드이다.
@@ -69,7 +69,7 @@ test_board_origin에서 bookType에 맡게 각각 BlockingQueue에 넣어주는 
 DB접속이 이루어진다.
 
 ----------------
-###BookGetSendThread (Work Thread & Producer & Consumer)
+**BookGetSendThread (Work Thread & Producer & Consumer)**
 >_발송큐에 값이 있을때까지 대기하는 Consumer & WorkerThread이자 값이 있다면 처리후에 결과큐에 넣어주는 Producer입니다._
 
 bookType에 해당되는 발송큐를 읽어들여 원래 책값의 10%을 판매액으로 변경한후에 결과큐에 넣어준다. 
@@ -78,7 +78,7 @@ DB접속이 발생되지 않는다
 
 ---------------
 
-###BookResultInsertThread (Work Thread & Consumer)
+**BookResultInsertThread (Work Thread & Consumer)**
 >_결과큐에 값이 있을때까지 대기하는 WorkerThread이자 값이 있다면 처리후에 결과큐에 넣어주는 Consumer입니다._
 
 해당분야의 결과큐에 있는 값을 가져와서 해당테이블에 인서트한다. 각 분야당 각각 3개의 스레드가 생성된다. (총 9개)
